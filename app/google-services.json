@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "453618464561",
+    "firebase_url": "https://maher-app-cf6a2-default-rtdb.firebaseio.com",
     "project_id": "maher-app-cf6a2",
     "storage_bucket": "maher-app-cf6a2.firebasestorage.app"
   },
@@ -8,6 +9,25 @@
     {
       "client_info": {
         "mobilesdk_app_id": "1:453618464561:android:1fd3f6276882e47238e210",
+        "android_client_info": {
+          "package_name": "com.apro.MaherQuickBetAnalyzer"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJ62cQVsF46cYn0IIZ-RALK7rn97biy84"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:453618464561:android:443ebf70bdc0b92338e210",
         "android_client_info": {
           "package_name": "com.apro.ProMaherQuickBetAnalyzer"
         }
