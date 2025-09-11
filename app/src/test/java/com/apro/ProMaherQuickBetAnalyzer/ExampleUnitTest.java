@@ -1,4 +1,4 @@
-package com.apro.MaherQuickBetAnalyzer;
+package com.apro.ProMaherQuickBetAnalyzer;
 
 import org.junit.Test;
 

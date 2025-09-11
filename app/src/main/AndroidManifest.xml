@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.apro.ProMaherQuickBetAnalyzer"
+    >
 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
@@ -19,7 +21,7 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name="com.apro.ProMaherQuickBetAnalyzer.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.MyApplication">
             <intent-filter>
@@ -30,15 +32,15 @@
         </activity>
 
         <service
-            android:name=".OverlayService"
+            android:name="com.apro.ProMaherQuickBetAnalyzer.OverlayService"
             android:exported="false" />
         <service
-            android:name=".ScreenshotCaptureService"
+            android:name="com.apro.ProMaherQuickBetAnalyzer.ScreenshotCaptureService"
             android:foregroundServiceType="mediaProjection"
             android:exported="false" />
 
         <service
-            android:name=".AutoClickService"
+            android:name="com.apro.ProMaherQuickBetAnalyzer.AutoClickService"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
             android:exported="true">
             <intent-filter>

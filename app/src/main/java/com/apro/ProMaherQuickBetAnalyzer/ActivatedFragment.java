@@ -1,4 +1,4 @@
-package com.apro.MaherQuickBetAnalyzer;
+package com.apro.ProMaherQuickBetAnalyzer;
 
 import android.content.Context;
 import android.os.Bundle;

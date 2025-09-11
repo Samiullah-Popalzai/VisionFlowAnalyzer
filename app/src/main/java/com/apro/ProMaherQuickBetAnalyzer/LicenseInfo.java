@@ -1,4 +1,4 @@
-package com.apro.MaherQuickBetAnalyzer;
+package com.apro.ProMaherQuickBetAnalyzer;
 
 public class LicenseInfo {
     private boolean id_expired;

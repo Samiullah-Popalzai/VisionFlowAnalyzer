@@ -1,4 +1,4 @@
-package com.apro.MaherQuickBetAnalyzer;
+package com.apro.ProMaherQuickBetAnalyzer;
 
 import static android.content.Context.MODE_PRIVATE;
 

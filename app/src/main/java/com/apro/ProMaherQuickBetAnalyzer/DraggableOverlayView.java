@@ -1,4 +1,4 @@
-package com.apro.MaherQuickBetAnalyzer;
+package com.apro.ProMaherQuickBetAnalyzer;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -8,8 +8,6 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.core.content.ContextCompat;
-
-import com.apro.MaherQuickBetAnalyzer.R;
 
 import java.util.ArrayList;
 

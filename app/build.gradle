@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace 'com.apro.MaherQuickBetAnalyzer'
+    namespace 'com.apro.ProMaherQuickBetAnalyzer'
     compileSdk 35
 
     defaultConfig {
-        applicationId "com.apro.MaherQuickBetAnalyzer"
+        applicationId "com.apro.ProMaherQuickBetAnalyzer"
         minSdk 24
         targetSdk 35
         versionCode 1

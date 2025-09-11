@@ -32,12 +32,12 @@
 # ===========================================================
 
 # Keep all fields of your model/data classes
--keep class com.apro.MaherQuickBetAnalyzer.** {
+-keep class com.apro.ProMaherQuickBetAnalyzer.** {
     <fields>;
 }
 
 # Keep serializable classes annotated with @Serializable (Kotlinx Serialization)
--keep class com.apro.MaherQuickBetAnalyzer.** { @kotlinx.serialization.Serializable *; }
+-keep class com.apro.ProMaherQuickBetAnalyzer.** { @kotlinx.serialization.Serializable *; }
 
 # Keep all Kotlinx Serialization library classes
 -keep class kotlinx.serialization.** { *; }
