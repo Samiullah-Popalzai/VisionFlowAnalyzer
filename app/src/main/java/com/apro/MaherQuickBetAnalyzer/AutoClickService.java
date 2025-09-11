@@ -78,40 +78,45 @@ public class AutoClickService extends AccessibilityService {
         if (items == null || items.isEmpty()) return;
 
         int maxClicks = Math.min(items.size(), 4); // Best, Strong, Safe, Wildcards
-        int delay = 0;
+        performNextClick(items, 0, maxClicks);
+    }
 
-        for (int i = 0; i < maxClicks; i++) {
-            String target = mapEmojiToName(items.get(i).name);
+    // Recursive helper to perform clicks sequentially
+    private void performNextClick(List<Prediction.Item> items, int index, int maxClicks) {
+        if (index >= maxClicks) return; // done with all clicks
 
-            for (RectangleData rect : DraggableOverlayView.savedRectangles) {
-                if (rect.name != null && rect.name.equals(target)) {
-                    int cx = rect.x + rect.width / 2;
-                    int cy = rect.y + rect.height / 2;
+        String target = mapEmojiToName(items.get(index).name);
 
-                    Path path = new Path();
-                    path.moveTo(cx, cy);
+        for (RectangleData rect : DraggableOverlayView.savedRectangles) {
+            if (rect.name != null && rect.name.equals(target)) {
+                int cx = rect.x + rect.width / 2;
+                int cy = rect.y + rect.height / 2;
 
-                    GestureDescription gesture = new GestureDescription.Builder()
-                            .addStroke(new GestureDescription.StrokeDescription(path, delay, 100))
-                            .build();
+                Path path = new Path();
+                path.moveTo(cx, cy);
 
-                    final int finalI = i;
-                    dispatchGesture(gesture, new GestureResultCallback() {
-                        @Override
-                        public void onCompleted(GestureDescription gestureDescription) {
-                            Log.d("AutoClickService", "Click SUCCESS: " + target + " at (" + cx + "," + cy + ")");
-                            // Do not stop service here
-                        }
+                GestureDescription gesture = new GestureDescription.Builder()
+                        .addStroke(new GestureDescription.StrokeDescription(path, 0, 100))
+                        .build();
 
-                        @Override
-                        public void onCancelled(GestureDescription gestureDescription) {
-                            Log.d("AutoClickService", "Click CANCELLED: " + target + " at (" + cx + "," + cy + ")");
-                        }
-                    }, null);
+                dispatchGesture(gesture, new GestureResultCallback() {
+                    @Override
+                    public void onCompleted(GestureDescription gestureDescription) {
+                        Log.d("AutoClickService", "Click SUCCESS: " + target + " at (" + cx + "," + cy + ")");
+                        // Delay before next click
+                        new android.os.Handler().postDelayed(() -> {
+                            performNextClick(items, index + 1, maxClicks); // next click
+                        }, 300); // delay in milliseconds (e.g., 300ms)
+                    }
 
-                    delay += 300; // space out clicks
-                    break;
-                }
+                    @Override
+                    public void onCancelled(GestureDescription gestureDescription) {
+                        Log.d("AutoClickService", "Click CANCELLED: " + target + " at (" + cx + "," + cy + ")");
+                        performNextClick(items, index + 1, maxClicks); // still try next click
+                    }
+                }, null);
+
+                break; // stop loop once target rectangle is found
             }
         }
     }
