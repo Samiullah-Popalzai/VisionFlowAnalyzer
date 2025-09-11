@@ -44,7 +44,10 @@ public class MainActivity extends AppCompatActivity {
         FirebaseApp.initializeApp(this);
         setContentView(R.layout.activity_main);
 
-        checkLicenseAndLoadFragment();
+        //checkLicenseAndLoadFragment();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, new ActivatedFragment())
+                .commit();
     }
 
     // ✅ Step 1: Check SharedPreferences and Firebase license

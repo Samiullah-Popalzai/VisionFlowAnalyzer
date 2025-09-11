@@ -50,4 +50,5 @@
     <string name="avoid">🚫 Avoid: -</string>
     <string name="powered_by_maher">Powered by Maher!</string>
     <string name="close">Close</string>
+    <string name="accessibility_description">Maher Quick Bet Analyzer accessibility service</string>
 </resources>
