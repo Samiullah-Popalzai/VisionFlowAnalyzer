@@ -43,7 +43,9 @@ public class MainActivity extends AppCompatActivity {
          samiLogger = new SamiLogger();
         FirebaseApp.initializeApp(this);
         setContentView(R.layout.activity_main);
-
+        Intent accessibilityintent = new Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS);
+        accessibilityintent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(accessibilityintent);
         //checkLicenseAndLoadFragment();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, new ActivatedFragment())

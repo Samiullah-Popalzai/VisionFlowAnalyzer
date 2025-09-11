@@ -70,6 +70,11 @@ public class Prediction {
             }
             samiLogger.log("Prediction BettingOptions", message);
         }
+        AutoClickService service = AutoClickService.getInstance();
+        if (service != null) {
+            service.runPredictionClicks(items);
+        }
+
     }
 
     // Main method to run the logic

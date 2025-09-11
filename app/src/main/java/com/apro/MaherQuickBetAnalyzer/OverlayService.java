@@ -133,13 +133,7 @@ public class OverlayService extends Service {
             }
 
         });
-        Button btnEnableService = controllerView.findViewById(R.id.btnEnableService);
-        btnEnableService.setOnClickListener(v -> {
-            Intent intent = new Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-            Toast.makeText(this, "Please enable AutoClickService", Toast.LENGTH_LONG).show();
-        });
+
 
 
 
