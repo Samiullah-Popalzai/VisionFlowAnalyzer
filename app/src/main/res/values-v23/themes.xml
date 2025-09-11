@@ -1,0 +1,9 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="Theme.MyApplication" parent="Base.Theme.MyApplication">
+        <!-- Transparent system bars for edge-to-edge. -->
+        <item name="android:navigationBarColor">#FFD700</item>
+        <item name="android:statusBarColor">#FFD700</item>
+        <item name="android:windowLightStatusBar">?attr/isLightTheme</item>
+    </style>
+</resources>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- Brand Colors -->
+    <color name="color_background">#94F6FAFF</color>
+    <color name="color_accent">#FE805D</color>
+    <color name="color_text">#26344F</color>
+    <color name="color_secondary">#7B8387</color>
+
+    <!-- Optional variants -->
+    <color name="color_white">#FFFFFF</color>
+    <color name="color_hot">#E53935</color> <!-- For HOT label -->
+    <color name="color_outline">#B0BEC5</color> <!-- For borders/lines -->
+
+    <!-- ProgressBar -->
+    <color name="progress_track">#D6DEE4</color> <!-- Light grey track -->
+    <color name="progress_accent">#FE805D</color> <!-- Progress fill -->
+
+    <color name="goldcolor">#FFD700</color>
+    <color name="textcolor">#000000</color>
+</resources>

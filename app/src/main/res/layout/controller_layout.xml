@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/layout_border"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <!-- Powered by Maher -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/powered_by_maher"
+        android:textColor="@color/color_text"
+        android:layout_gravity="center"
+        android:textSize="18sp" />
+
+    <!-- Size Controller -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        >
+        <!-- Slider for rectangle size -->
+        <TextView
+            android:id="@+id/rectSizeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rectangle Size: 350"
+            android:paddingTop="8dp" />
+
+        <SeekBar
+            android:id="@+id/rectSizeSeekBar"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:max="600"
+            android:progress="350" />
+    </LinearLayout>
+
+    <!-- Controller Section -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:background="#7EFFFFFF">
+
+        <!-- Horizontal Scroll for buttons -->
+        <HorizontalScrollView
+            android:id="@+id/buttonScroll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@id/progressLayout"
+            android:fillViewport="true"
+            android:scrollbars="horizontal">
+
+            <LinearLayout
+                android:id="@+id/buttonLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <!-- Start Button -->
+                <Button
+                    android:id="@+id/btnStart"
+                    android:layout_width="60dp"
+                    android:layout_height="40dp"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:padding="0dp"
+                    android:layout_marginVertical="2dp"
+                    android:gravity="center"
+                    android:backgroundTint="#304FFE"
+                    android:text="Start"
+                    android:textColor="@color/color_white"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <!-- Close Button -->
+                <Button
+                    android:id="@+id/btnClose"
+                    android:layout_width="60dp"
+                    android:layout_height="40dp"
+                    android:layout_marginVertical="2dp"
+                    android:backgroundTint="@color/color_hot"
+                    android:gravity="center"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:padding="2dp"
+                    android:text="Close"
+                    android:textColor="@color/color_white"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <!-- Disable Touch Button -->
+                <Button
+                    android:id="@+id/btnToggleTouch"
+                    android:layout_width="130dp"
+                    android:layout_height="35dp"
+                    android:layout_marginVertical="2dp"
+                    android:backgroundTint="@color/color_accent"
+                    android:gravity="center"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:padding="0dp"
+                    android:text="Disable Touch"
+                    android:textColor="@color/color_white"
+                    android:textSize="13sp"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <!-- Circular progress at top-right -->
+        <FrameLayout
+            android:id="@+id/progressLayout"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="0dp">
+
+            <ProgressBar
+                android:id="@+id/circularProgress"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:indeterminate="false"
+                android:max="30"
+                android:progress="30"
+                android:progressDrawable="@drawable/circular_progress_bar" />
+
+            <TextView
+                android:id="@+id/progressText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="30"
+                android:textColor="@color/color_text"
+                android:textSize="0sp" />
+        </FrameLayout>
+    </RelativeLayout>
+
+
+
+    <!-- Options Section -->
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        android:scrollbars="horizontal"
+        android:background="#7EFFFFFF"
+        android:padding="8dp">
+        <!-- Container -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            >
+            <!-- Best Option -->
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/Option0"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginHorizontal="2dp"
+                android:background="#33691E"
+                android:gravity="start|center_vertical"
+                android:paddingStart="8dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:text="@string/best"
+                android:textColor="@color/color_white"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <!-- Logical Option -->
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/Option1"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginHorizontal="2dp"
+                android:background="#806000"
+                android:gravity="start|center_vertical"
+                android:paddingStart="8dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:text="@string/strong"
+                android:textColor="@color/color_white"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <!-- Safe Option -->
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/Option2"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginHorizontal="2dp"
+                android:background="#3C3C3E"
+                android:gravity="start|center_vertical"
+                android:paddingStart="8dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:text="@string/safe"
+                android:textColor="@color/color_white"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+            <!-- Wildcard Options -->
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/Option3"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginHorizontal="2dp"
+                android:background="#3C3C3E"
+                android:gravity="start|center_vertical"
+                android:paddingStart="8dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:text="@string/wildcard"
+                android:textColor="@color/color_white"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+
+
+</LinearLayout>
