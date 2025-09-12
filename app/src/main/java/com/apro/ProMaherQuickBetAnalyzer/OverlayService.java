@@ -119,20 +119,7 @@ public class OverlayService extends Service {
 
         btnStart.setOnClickListener(v -> startCaptureAndTimer());
 
-        Button btnAutoClick = controllerView.findViewById(R.id.btnAutoClick);
-        btnAutoClick.setOnClickListener(v -> {
-            AutoClickService service = AutoClickService.getInstance();
-            if (service == null) {
-                Toast.makeText(this, "Autoclickservice not running", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, "Autoclickservice running!", Toast.LENGTH_SHORT).show();
-                samiLogger.log("AutoClickService", "Service is active");
 
-                // Example: perform click at x=500, y=1000
-                service.performClick(500, 1000);
-            }
-
-        });
 
 
 

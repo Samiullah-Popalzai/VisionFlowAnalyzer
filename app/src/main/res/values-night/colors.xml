@@ -19,6 +19,6 @@
     <color name="progress_accent">#FE805D</color> <!-- Progress fill -->
 
 
-    <color name="goldcolor">#FFD700</color>
+    <color name="themecolor">#FF1744</color>
     <color name="textcolor">#000000</color>
 </resources>

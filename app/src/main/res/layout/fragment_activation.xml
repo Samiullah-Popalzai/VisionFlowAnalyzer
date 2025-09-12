@@ -49,7 +49,7 @@
                     android:text="Enter your license key below to activate the app."
                     android:textAlignment="center"
                     android:gravity="center"
-                    android:textColor="@color/goldcolor"
+                    android:textColor="@color/themecolor"
                     android:textSize="20dp" />
 
                 <EditText
