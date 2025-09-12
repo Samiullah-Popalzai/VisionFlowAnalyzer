@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -109,8 +110,8 @@ public class OverlayService extends Service {
         });
 
         // Buttons
-        Button btnClose = controllerView.findViewById(R.id.btnClose);
-        Button btnStart = controllerView.findViewById(R.id.btnStart);
+        ImageView btnClose = controllerView.findViewById(R.id.btnClose);
+        ImageView btnStart = controllerView.findViewById(R.id.btnStart);
         Button btnToggleTouch = controllerView.findViewById(R.id.btnToggleTouch);
 
         btnClose.setOnClickListener(v -> stopService());
