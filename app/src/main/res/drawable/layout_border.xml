@@ -14,7 +14,7 @@
 
     <!-- Optional border -->
     <stroke
-        android:width="5dp"
+        android:width="2dp"
         android:color="#A48D61" />
 
 </shape>

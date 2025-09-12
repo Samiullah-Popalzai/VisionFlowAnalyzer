@@ -21,4 +21,7 @@
 
     <color name="themecolor">#FF1744</color>
     <color name="textcolor">#000000</color>
+
+    <color name="rectangle">#0A111B</color>
+    <color name="rectangleborder">#A48D61</color>
 </resources>

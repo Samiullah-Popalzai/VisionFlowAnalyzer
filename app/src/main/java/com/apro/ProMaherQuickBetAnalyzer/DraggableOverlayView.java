@@ -26,7 +26,7 @@ public class DraggableOverlayView extends View {
     public DraggableOverlayView(Context context) {
         super(context);
 
-        paint.setColor(ContextCompat.getColor(context, R.color.color_accent));
+        paint.setColor(ContextCompat.getColor(context, R.color.rectangle));
         paint.setAlpha(150);
         paint.setStyle(Paint.Style.FILL);
         loadRectanglePositions(); // load saved positions
@@ -41,14 +41,23 @@ public class DraggableOverlayView extends View {
         textPaint.setColor(Color.WHITE);
         textPaint.setTextSize(40f);
 
+        Paint borderPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        borderPaint.setColor(Color.BLACK); // border color
+        borderPaint.setStyle(Paint.Style.STROKE); // only stroke
+        borderPaint.setStrokeWidth(6f); // border thickness
+        borderPaint.setColor(ContextCompat.getColor(getContext(),R.color.rectangleborder));
         for (RectangleData rect : savedRectangles) {
-            // draw rectangle
+            // draw filled rectangle
             canvas.drawRect(rect.x, rect.y, rect.x + rect.width, rect.y + rect.height, paint);
+
+            // draw border
+            canvas.drawRect(rect.x, rect.y, rect.x + rect.width, rect.y + rect.height, borderPaint);
 
             // draw name inside rectangle (top-left corner)
             canvas.drawText(rect.name, rect.x + 20, rect.y + 50, textPaint);
         }
     }
+
 
 
     @Override
