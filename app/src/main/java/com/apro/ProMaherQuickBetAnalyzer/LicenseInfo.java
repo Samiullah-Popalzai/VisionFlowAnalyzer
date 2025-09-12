@@ -5,6 +5,7 @@ public class LicenseInfo {
     private boolean is_license_used;
     private String license_key;
     private String valid_until;
+    private boolean pro;
 
     // Empty constructor required for Firebase
     public LicenseInfo() {}
@@ -24,5 +25,8 @@ public class LicenseInfo {
 
     public String getValid_until(){
         return valid_until;
+    }
+    public boolean pro(){
+        return pro;
     }
 }

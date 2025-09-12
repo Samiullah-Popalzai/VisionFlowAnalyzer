@@ -46,10 +46,7 @@ public class MainActivity extends AppCompatActivity {
         Intent accessibilityintent = new Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS);
         accessibilityintent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(accessibilityintent);
-        //checkLicenseAndLoadFragment();
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, new ActivatedFragment())
-                .commit();
+        checkLicenseAndLoadFragment();
     }
 
     // ✅ Step 1: Check SharedPreferences and Firebase license
@@ -62,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
             // No license → show ActivationFragment
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container, new ActivationFragment())
-                    .commit();
+                    .commitAllowingStateLoss();
 
         } else {
             FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -78,15 +75,24 @@ public class MainActivity extends AppCompatActivity {
                             samiLogger.log("TAG22", "License-Key: " + licenseInfo.getLicense_key());
                             samiLogger.log("TAG22", "valid-until: " + licenseInfo.getValid_until());
 
+
+
                             if(licenseInfo.isId_expired()){
+                                samiLogger.log("TAG22Fun", "if(licenseInfo.isId_expired()");
                                 Toast.makeText(MainActivity.this,"Your License is expired",Toast.LENGTH_LONG).show();
                                 getSupportFragmentManager().beginTransaction()
                                         .replace(R.id.fragment_container, new ActivationFragment())
-                                        .commit();
-                            }else{
+                                        .commitAllowingStateLoss();
+
+                            }
+                            else{
+                                samiLogger.log("TAG22Fun", "if(licenseInfo.isId_expired() else");
+
                                 samiLogger.log("TAG22","GOOGLE TIME:"+getCurrentDate());
                                 boolean expired = isDateExpired(licenseInfo.getValid_until(), getCurrentDate());
                                 if (expired) {
+                                    samiLogger.log("TAG22Fun", "if (expired) ");
+
                                     samiLogger.log("TAG22", "License is expired!");
                                     // Update the field "is-expired" to true
                                     myRef.child("is_expired").setValue(true)
@@ -101,6 +107,8 @@ public class MainActivity extends AppCompatActivity {
                                             .replace(R.id.fragment_container, new ActivationFragment())
                                             .commitAllowingStateLoss();
                                 } else {
+                                    samiLogger.log("TAG22Fun", "if (expired) else");
+
                                     samiLogger.log("TAG22", "License is still valid.");
                                     getSupportFragmentManager().beginTransaction()
                                             .replace(R.id.fragment_container, new ActivatedFragment())

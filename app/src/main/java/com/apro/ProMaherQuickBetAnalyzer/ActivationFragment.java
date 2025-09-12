@@ -95,7 +95,7 @@ public class ActivationFragment extends Fragment {
                 if (!isAdded()) return;
 
                 if (!dataSnapshot.exists()) {
-                    safeToast("This License is not registered");
+                    safeToast("This License is not registered!");
                     samiLogger.log("Activate33", "This License is not registered");
                     resetUi();
                     return;
@@ -103,7 +103,7 @@ public class ActivationFragment extends Fragment {
 
                 LicenseInfo licenseInfo = dataSnapshot.getValue(LicenseInfo.class);
                 if (licenseInfo == null) {
-                    safeToast("Invalid license data");
+                    safeToast("Invalid license data!");
                     resetUi();
                     return;
                 }
@@ -113,13 +113,18 @@ public class ActivationFragment extends Fragment {
                 samiLogger.log("Activate33", "valid-until: " + licenseInfo.getValid_until());
 
                 if (licenseInfo.isId_expired()) {
-                    safeToast("This License is expired");
+                    safeToast("This License is expired!");
                     resetUi();
                     return;
                 }
 
                 if (Boolean.TRUE.equals(licenseInfo.getIs_license_used())) {
-                    safeToast("This License is used by another person");
+                    safeToast("This License is used by another person!");
+                    resetUi();
+                    return;
+                }
+                if (Boolean.FALSE.equals(licenseInfo.pro())) {
+                    safeToast("This license is not a Pro license!");
                     resetUi();
                     return;
                 }
