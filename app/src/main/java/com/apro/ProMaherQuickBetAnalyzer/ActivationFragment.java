@@ -123,7 +123,7 @@ public class ActivationFragment extends Fragment {
                     resetUi();
                     return;
                 }
-                if (Boolean.FALSE.equals(licenseInfo.pro())) {
+                if (licenseInfo.pro()) {
                     safeToast("This license is not a Pro license!");
                     resetUi();
                     return;
