@@ -13,6 +13,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,12 +32,11 @@ import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity {
-
+    private FirebaseAuth mAuth;
     private static final int REQUEST_OVERLAY = 5469;
     private static final int REQUEST_SCREENSHOT = 1001;
     private SamiLogger samiLogger =null;
-    private static final String REMOTE_URL =
-            "https://raw.githubusercontent.com/2018samiullah/App-Access/refs/heads/main/Floating%20App%20(Maher%20Quick%20Bet%20Analyzer).txt";
+   // private static final String REMOTE_URL =            "https://raw.githubusercontent.com/2018samiullah/App-Access/refs/heads/main/Floating%20App%20(Maher%20Quick%20Bet%20Analyzer).txt";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +44,31 @@ public class MainActivity extends AppCompatActivity {
          samiLogger = new SamiLogger();
         FirebaseApp.initializeApp(this);
         setContentView(R.layout.activity_main);
-        Intent accessibilityintent = new Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS);
-        accessibilityintent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(accessibilityintent);
-        checkLicenseAndLoadFragment();
+
+
+        // Initialize Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
+        signInExistingUser();
+    }
+    private void signInExistingUser() {
+        String email = "maher@admin.com"; // your Firebase user's email
+        String password = "12345678"; // the password you set in Firebase
+
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        samiLogger.log("FirebaseAuth","Signed in: " + user.getEmail());
+
+                        Intent accessibilityintent = new Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS);
+                        accessibilityintent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(accessibilityintent);
+                        checkLicenseAndLoadFragment();
+
+                    } else {
+                        samiLogger.log("FirebaseAuth","Login failed: " + task.getException().getMessage());
+                    }
+                });
     }
 
     // ✅ Step 1: Check SharedPreferences and Firebase license
@@ -68,16 +90,18 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()) {
+                        samiLogger.log("Activate33", "Stored Licence Exist in firebase main()");
+
                         LicenseInfo licenseInfo = dataSnapshot.getValue(LicenseInfo.class);
                         if (licenseInfo != null) {
-                            samiLogger.log("TAG22", "is-expired: " + licenseInfo.isId_expired());
+                            samiLogger.log("TAG22", "is-expired: " + licenseInfo.isIs_expired());
                             samiLogger.log("TAG22", "is_license_used: " + licenseInfo.getIs_license_used());
                             samiLogger.log("TAG22", "License-Key: " + licenseInfo.getLicense_key());
                             samiLogger.log("TAG22", "valid-until: " + licenseInfo.getValid_until());
 
 
 
-                            if(licenseInfo.isId_expired()){
+                            if(licenseInfo.isIs_expired()){
                                 samiLogger.log("TAG22Fun", "if(licenseInfo.isId_expired()");
                                 Toast.makeText(MainActivity.this,"Your License is expired",Toast.LENGTH_LONG).show();
                                 getSupportFragmentManager().beginTransaction()
@@ -117,7 +141,13 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                     }
-
+                    else{
+                        samiLogger.log("Activate33", "Stored Licence Doesn'tExist in firebase main()");
+                        Toast.makeText(MainActivity.this,"Your License is Removed from Server",Toast.LENGTH_LONG).show();
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.fragment_container, new ActivationFragment())
+                                .commitAllowingStateLoss();
+                    }
                 }
 
                 @Override
@@ -132,7 +162,13 @@ public class MainActivity extends AppCompatActivity {
 
     // ✅ Public method that can be called from ActivatedFragment
     public void runAnalyzer() {
-        new FetchRemoteFlag().execute(REMOTE_URL);
+       // new FetchRemoteFlag().execute(REMOTE_URL);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(MainActivity.this)) {
+            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+            startActivityForResult(intent, REQUEST_OVERLAY);
+        } else {
+            requestScreenCapture();
+        }
     }
 
     // 🔹 AsyncTask to fetch remote flag

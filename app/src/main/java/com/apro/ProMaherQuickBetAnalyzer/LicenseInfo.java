@@ -1,7 +1,7 @@
 package com.apro.ProMaherQuickBetAnalyzer;
 
 public class LicenseInfo {
-    private boolean id_expired;
+    private boolean is_expired;
     private boolean is_license_used;
     private String license_key;
     private String valid_until;
@@ -11,11 +11,11 @@ public class LicenseInfo {
     public LicenseInfo() {}
 
     // Getters
-    public boolean isId_expired() {
-        return id_expired;
+    public boolean isIs_expired() {
+        return is_expired;
     }
 
-    public Boolean getIs_license_used() {
+    public boolean getIs_license_used() {
         return is_license_used;
     }
 
@@ -26,7 +26,7 @@ public class LicenseInfo {
     public String getValid_until(){
         return valid_until;
     }
-    public boolean pro(){
+    public boolean getPro(){
         return pro;
     }
 }

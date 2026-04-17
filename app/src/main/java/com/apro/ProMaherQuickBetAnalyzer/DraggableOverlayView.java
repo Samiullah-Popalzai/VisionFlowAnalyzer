@@ -13,15 +13,12 @@ import java.util.ArrayList;
 
 public class DraggableOverlayView extends View {
 
-    private final ArrayList<RectangleData> circles = new ArrayList<>();
     private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     // Replace CircleData with RectangleData
-    private final ArrayList<RectangleData> rectangles = new ArrayList<>();
     public static ArrayList<RectangleData> savedRectangles = new ArrayList<>();
     private int draggingIndex = -1;
     private float offsetX, offsetY;
 
-    public static ArrayList<RectangleData> savedCircles = new ArrayList<>();
 
     public DraggableOverlayView(Context context) {
         super(context);

@@ -31,7 +31,7 @@ public class ActivationFragment extends Fragment {
     private TextView tvStatus;
     private TextView tvSupport;
     private SamiLogger samiLogger = null;
-
+    private MainActivity mainActivity;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -39,7 +39,7 @@ public class ActivationFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_activation, container, false);
-
+        mainActivity=new MainActivity();
         etLicense = view.findViewById(R.id.etLicense);
         btnVerify = view.findViewById(R.id.btnVerify);
         progressBar = view.findViewById(R.id.progressBar);
@@ -89,10 +89,10 @@ public class ActivationFragment extends Fragment {
         samiLogger.log("Activate33", "btnVerify clicked textfield: " + licenseKey);
 
         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference(licenseKey);
-        myRef.addListenerForSingleValueEvent(new ValueEventListener() { // one-time listener
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (!isAdded()) return;
+                if (!isAdded()) return; // <-- important safety check
 
                 if (!dataSnapshot.exists()) {
                     safeToast("This License is not registered!");
@@ -107,24 +107,36 @@ public class ActivationFragment extends Fragment {
                     resetUi();
                     return;
                 }
+                if (!licenseInfo.getPro()) {
+                    safeToast("This license is not a Pro license");
+                    resetUi();
+                    return;
+                }
 
-                samiLogger.log("Activate33", "is-expired: " + licenseInfo.isId_expired());
+                samiLogger.log("Activate33", "is-pro: " + licenseInfo.getPro());
+                samiLogger.log("Activate33", "is-expired: " + licenseInfo.isIs_expired());
                 samiLogger.log("Activate33", "is_license_used: " + licenseInfo.getIs_license_used());
                 samiLogger.log("Activate33", "valid-until: " + licenseInfo.getValid_until());
 
-                if (licenseInfo.isId_expired()) {
+                if (licenseInfo.isIs_expired()) {
                     safeToast("This License is expired!");
                     resetUi();
                     return;
+                } else {
+                    boolean expired = mainActivity.isDateExpired(licenseInfo.getValid_until(), mainActivity.getCurrentDate());
+                    if (expired) {
+                        samiLogger.log("TAG22", "License is expired!");
+                        myRef.child("is_expired").setValue(true)
+                                .addOnSuccessListener(aVoid -> samiLogger.log("TAG22", "is-expired successfully updated to true"))
+                                .addOnFailureListener(e -> samiLogger.log("TAG22", "Failed to update is-expired: " + e.getMessage()));
+                        safeToast("This License is Expired");
+                        resetUi();
+                        return;
+                    }
                 }
 
-                if (Boolean.TRUE.equals(licenseInfo.getIs_license_used())) {
+                if (licenseInfo.getIs_license_used()) {
                     safeToast("This License is used by another person!");
-                    resetUi();
-                    return;
-                }
-                if (licenseInfo.pro()) {
-                    safeToast("This license is not a Pro license!");
                     resetUi();
                     return;
                 }
@@ -132,18 +144,28 @@ public class ActivationFragment extends Fragment {
                 // Mark license as used
                 myRef.child("is_license_used").setValue(true)
                         .addOnSuccessListener(aVoid -> {
+                            if (!isAdded()) return; // <-- safety check again
+
                             samiLogger.log("Activate33", "is_license_used successfully updated to true");
 
                             SharedPreferences prefs = requireActivity()
                                     .getSharedPreferences("app_prefs", MODE_PRIVATE);
                             prefs.edit().putString("License", licenseKey).apply();
 
-                            // Navigate to ActivatedFragment
-                            requireActivity().getSupportFragmentManager().beginTransaction()
-                                    .replace(R.id.fragment_container, new ActivatedFragment())
-                                    .commit();
+                            // Lifecycle-safe fragment transaction
+                            if (getActivity() != null && !getActivity().isFinishing()) {
+                                getActivity().runOnUiThread(() -> {
+                                    if (isAdded()) {
+                                        requireActivity().getSupportFragmentManager()
+                                                .beginTransaction()
+                                                .replace(R.id.fragment_container, new ActivatedFragment())
+                                                .commitAllowingStateLoss(); // prevents fragment state errors
+                                    }
+                                });
+                            }
                         })
                         .addOnFailureListener(e -> {
+                            if (!isAdded()) return;
                             samiLogger.log("Activate33", "Failed to update is_license_used: " + e.getMessage());
                             safeToast("Failed to update license. Try again.");
                             resetUi();
@@ -153,7 +175,7 @@ public class ActivationFragment extends Fragment {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 if (!isAdded()) return;
-                samiLogger.log("Activate33", "Failed to read value. "+error.toException());
+                samiLogger.log("Activate33", "Failed to read value. " + error.toException());
                 safeToast("Failed to read license / check your internet connection!");
                 resetUi();
             }
